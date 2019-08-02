@@ -2,11 +2,11 @@ package com.shengqf.network;
 
 import android.text.TextUtils;
 
-import com.shengqf.network.listener.OnHeaderMapFunction;
+import com.shengqf.network.listener.OnHeaderMapTransformFunction;
 import com.shengqf.network.listener.OnNetworkFailListener;
 import com.shengqf.network.listener.OnNetworkFinishListener;
 import com.shengqf.network.listener.OnNetworkSuccessListener;
-import com.shengqf.network.listener.OnParamsMapFunction;
+import com.shengqf.network.listener.OnParamsMapTransformFunction;
 import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.RxFragment;
 
@@ -63,11 +63,11 @@ public class NetworkTask {
 
     public NetworkTask setUrl(String url) {
         mUrl = url;
-        //initParameterMap();
+        initParameterMap();
         return this;
     }
 
-    public NetworkTask initParameterMap() {
+    private void initParameterMap() {
         if (mHeaderMap == null) {
             mHeaderMap = new HashMap<>();
         } else {
@@ -78,7 +78,6 @@ public class NetworkTask {
         } else {
             mParameterMap.clear();
         }
-        return this;
     }
 
     public NetworkTask addHeader(String key, Object value) {
@@ -246,7 +245,7 @@ public class NetworkTask {
     }
 
     private Map<String, Object> getCommonParameter() {
-        OnParamsMapFunction<Map<String, Object>, TreeMap<String, Object>> paramsMapFunction
+        OnParamsMapTransformFunction<Map<String, Object>, TreeMap<String, Object>> paramsMapFunction
                 = NetworkConfig.getInstance().getOnParamsMapFunction();
         if (paramsMapFunction != null) {
             try {
@@ -260,7 +259,7 @@ public class NetworkTask {
     }
 
     private TreeMap<String, Object> getHeaderMap() {
-        OnHeaderMapFunction<Map<String, Object>, Map<String, Object>, TreeMap<String, Object>>
+        OnHeaderMapTransformFunction<Map<String, Object>, Map<String, Object>, TreeMap<String, Object>>
                 headerMapFunction = NetworkConfig.getInstance().getOnHeaderMapFunction();
         if (headerMapFunction != null) {
             try {

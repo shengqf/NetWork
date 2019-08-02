@@ -9,7 +9,7 @@ import io.reactivex.functions.BiFunction;
  * date : 2019/8/1
  * describe :
  */
-public interface OnHeaderMapFunction<T1, T2, R> extends BiFunction<T1, T2, R> {
+public interface OnHeaderMapTransformFunction<T1, T2, R> extends BiFunction<T1, T2, R> {
 
 }
 

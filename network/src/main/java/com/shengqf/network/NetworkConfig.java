@@ -1,8 +1,8 @@
 package com.shengqf.network;
 
 
-import com.shengqf.network.listener.OnHeaderMapFunction;
-import com.shengqf.network.listener.OnParamsMapFunction;
+import com.shengqf.network.listener.OnHeaderMapTransformFunction;
+import com.shengqf.network.listener.OnParamsMapTransformFunction;
 import com.shengqf.network.listener.OnSSOListener;
 
 import java.util.Map;
@@ -23,8 +23,8 @@ public class NetworkConfig {
     private long mConnectTimeOut = 15L;//单位秒
     private long mWriteTimeOut = 15L;//单位秒
     private long mReadTimeOut = 15L;//单位秒
-    private OnHeaderMapFunction<Map<String, Object>,Map<String, Object>, TreeMap<String, Object>> mOnHeaderMapFunction;
-    private OnParamsMapFunction<Map<String, Object>, TreeMap<String, Object>> mOnParamsMapFunction;
+    private OnHeaderMapTransformFunction<Map<String, Object>, Map<String, Object>, TreeMap<String, Object>> mOnHeaderMapTransformFunction;
+    private OnParamsMapTransformFunction<Map<String, Object>, TreeMap<String, Object>> mOnParamsMapTransformFunction;
     private OnSSOListener mOnSSOListener;//单设备登录
 
     private static final Object LOCK = new Object();
@@ -105,35 +105,35 @@ public class NetworkConfig {
         return mWriteTimeOut;
     }
 
-    public NetworkConfig setOnHeaderMapFunction(OnHeaderMapFunction<Map<String, Object>,Map<String, Object>, TreeMap<String, Object>> function) {
-        this.mOnHeaderMapFunction = function;
+    public NetworkConfig setOnHeaderMapTransformFunction(OnHeaderMapTransformFunction<Map<String, Object>, Map<String, Object>, TreeMap<String, Object>> function) {
+        this.mOnHeaderMapTransformFunction = function;
         return this;
     }
 
-    public OnHeaderMapFunction<Map<String, Object>,Map<String, Object>, TreeMap<String, Object>> getOnHeaderMapFunction() {
-        return mOnHeaderMapFunction;
+    public OnHeaderMapTransformFunction<Map<String, Object>, Map<String, Object>, TreeMap<String, Object>> getOnHeaderMapFunction() {
+        return mOnHeaderMapTransformFunction;
     }
 
-    public NetworkConfig setOnParamsMapFunction(OnParamsMapFunction<Map<String, Object>, TreeMap<String, Object>> function) {
-        this.mOnParamsMapFunction = function;
+    public NetworkConfig setOnParamsMapTransformFunction(OnParamsMapTransformFunction<Map<String, Object>, TreeMap<String, Object>> function) {
+        this.mOnParamsMapTransformFunction = function;
         return this;
     }
 
-    public OnParamsMapFunction<Map<String, Object>, TreeMap<String, Object>> getOnParamsMapFunction() {
-        return mOnParamsMapFunction;
+    public OnParamsMapTransformFunction<Map<String, Object>, TreeMap<String, Object>> getOnParamsMapFunction() {
+        return mOnParamsMapTransformFunction;
     }
 
-    public NetworkConfig setOnSSOListener(OnSSOListener onSSOListener){
+    public NetworkConfig setOnSSOListener(OnSSOListener onSSOListener) {
         this.mOnSSOListener = onSSOListener;
         return this;
     }
 
-    public OnSSOListener getOnSSOListener(){
+    public OnSSOListener getOnSSOListener() {
         return mOnSSOListener;
     }
 
 
-    public static enum MediaType {
+    public enum MediaType {
         FORM, JSON
     }
 }

@@ -2,6 +2,8 @@ package com.shengqf.network.demo;
 
 import android.app.Application;
 
+import com.shengqf.network.demo.util.ContextUtil;
+
 /**
  * Created by shengqf
  * Email : shengqf@bsoft.com.cn
@@ -13,6 +15,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        ContextUtil.init(this);
+        NetworkHelper.init(this);
     }
 }

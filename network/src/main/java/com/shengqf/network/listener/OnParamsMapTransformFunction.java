@@ -8,5 +8,5 @@ import io.reactivex.functions.Function;
  * date : 2019/8/1
  * describe :
  */
-public interface OnParamsMapFunction<T, R> extends Function<T, R> {
+public interface OnParamsMapTransformFunction<T, R> extends Function<T, R> {
 }

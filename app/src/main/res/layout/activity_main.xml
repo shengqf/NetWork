@@ -12,9 +12,9 @@
         android:text="登录"/>
 
     <Button
-        android:id="@+id/dept_btn"
+        android:id="@+id/record_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="科室查询"/>
+        android:text="申请记录查询"/>
 
 </LinearLayout>
