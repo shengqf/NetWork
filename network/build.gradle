@@ -6,6 +6,10 @@ android {
         minSdkVersion 19
         targetSdkVersion 27
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
@@ -26,3 +30,14 @@ dependencies {
     //fastjson
     api 'com.alibaba:fastjson:1.2.48'
 }
+
+
+//生成jar包
+task makeJar(type:Copy) {
+    delete 'build/outputs/network.jar'
+    from('build/intermediates/packaged-classes/release/') //jar文件来源
+    into('build/libs/') //生成路径
+    include('classes.jar')
+    rename('classes.jar','network.jar') //命名为network.jar
+}
+makeJar.dependsOn(build)
