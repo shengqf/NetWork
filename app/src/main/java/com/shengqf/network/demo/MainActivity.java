@@ -15,8 +15,9 @@ import com.shengqf.network.demo.util.ToastUtil;
 import com.shengqf.network.listener.OnNetworkFailListener;
 import com.shengqf.network.listener.OnNetworkFinishListener;
 import com.shengqf.network.listener.OnNetworkSuccessListener;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RxAppCompatActivity {
 
     private Button loginBtn, recordBtn;
 

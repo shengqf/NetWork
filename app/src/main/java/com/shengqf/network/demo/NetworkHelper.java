@@ -2,6 +2,7 @@ package com.shengqf.network.demo;
 
 import android.app.Application;
 
+import com.alibaba.fastjson.JSON;
 import com.shengqf.network.NetworkConfig;
 import com.shengqf.network.demo.util.ContextUtil;
 import com.shengqf.network.demo.util.DeviceUtil;
@@ -75,8 +76,13 @@ public class NetworkHelper {
         String sign;
         StringBuilder sb = new StringBuilder();
         for (String key : signMap.keySet()) {
-            Object value = signMap.get(key);
-            sb.append(value);
+            try {
+                String value = (String) signMap.get(key);
+                sb.append(value);
+            } catch (ClassCastException e) {
+                Object object = signMap.get(key);
+                sb.append(JSON.toJSONString(object));
+            }
         }
         sign = MD5.getMD5(sb.toString());
 
@@ -115,8 +121,13 @@ public class NetworkHelper {
         String sign;
         StringBuilder sb = new StringBuilder();
         for (String key : signMap.keySet()) {
-            Object value = signMap.get(key);
-            sb.append(value);
+            try {
+                String value = (String) signMap.get(key);
+                sb.append(value);
+            } catch (ClassCastException e) {
+                Object object = signMap.get(key);
+                sb.append(JSON.toJSONString(object));
+            }
         }
         sign = MD5.getMD5(sb.toString());
 

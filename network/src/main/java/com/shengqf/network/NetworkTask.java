@@ -7,8 +7,11 @@ import com.shengqf.network.listener.OnNetworkFailListener;
 import com.shengqf.network.listener.OnNetworkFinishListener;
 import com.shengqf.network.listener.OnNetworkSuccessListener;
 import com.shengqf.network.listener.OnParamsMapTransformFunction;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.RxActivity;
 import com.trello.rxlifecycle2.components.RxFragment;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.io.File;
 import java.net.SocketTimeoutException;
@@ -53,21 +56,21 @@ public class NetworkTask {
         private static final NetworkTask INSTANCE = new NetworkTask();
     }
 
-    private NetworkTask() {
-
-    }
-
     public static NetworkTask getInstance() {
         return Singleton.INSTANCE;
     }
 
+    public NetworkTask(){
+        //多个请求同时进行时不能用单例
+    }
+
     public NetworkTask setUrl(String url) {
         mUrl = url;
-        initParameterMap();
+        initParameters();
         return this;
     }
 
-    private void initParameterMap() {
+    private void initParameters() {
         if (mHeaderMap == null) {
             mHeaderMap = new HashMap<>();
         } else {
@@ -78,6 +81,9 @@ public class NetworkTask {
         } else {
             mParameterMap.clear();
         }
+        mOnSuccessListener = null;
+        mOnFailListener = null;
+        mOnFinishListener = null;
     }
 
     public NetworkTask addHeader(String key, Object value) {
@@ -204,15 +210,16 @@ public class NetworkTask {
                 });
     }
 
-    //绑定Activity或Fragment的生命周期(绑定到具体哪个方法用bindUntilEvent(ActivityEvent.DESTROY))
     private <T> Observable<String> bindToLifecycle(T t) {
         if (t == null) {
             return mObservable;
         }
-        if (t instanceof RxActivity) {
-            return mObservable.compose(((RxActivity) t).<String>bindToLifecycle());
+        if (t instanceof RxAppCompatActivity) {
+            return mObservable.compose(((RxAppCompatActivity) t).<String>bindUntilEvent(ActivityEvent.DESTROY));
+        } else if (t instanceof RxActivity){
+            return mObservable.compose(((RxActivity) t).<String>bindUntilEvent(ActivityEvent.DESTROY));
         } else if (t instanceof RxFragment) {
-            return mObservable.compose(((RxFragment) t).<String>bindToLifecycle());
+            return mObservable.compose(((RxFragment) t).<String>bindUntilEvent(FragmentEvent.DESTROY));
         }
         return mObservable;
     }
