@@ -1,6 +1,7 @@
 package com.shengqf.network.demo;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.shengqf.network.NetworkConfig;
@@ -105,6 +106,31 @@ public class NetworkHelper {
     }
 
     private static TreeMap<String, Object> getNewParamsMap(Map<String, Object> paramsMap) {
+        if (BuildConfig.DEBUG) { //打印入参
+            StringBuilder sb = new StringBuilder();
+            sb.append("\n请求参数:\n");
+            sb.append("============================================================================================================");
+            sb.append("\n");
+            if (null != paramsMap && paramsMap.size() > 0) {
+                for (Object o : paramsMap.entrySet()) {
+                    Map.Entry entry = (Map.Entry) o;
+                    String key = (String) entry.getKey();
+                    Object value = entry.getValue();
+                    if (!key.equals("utype")
+                            && !key.equals("device")
+                            && !key.equals("token")
+                            && !key.equals("sn")
+                            && !key.equals("sign")
+                            && !key.equals("timestamp")) {
+                        sb.append(key).append(" : ").append(value).append("\n");
+                    }
+                }
+            }
+            sb.append("============================================================================================================");
+            sb.append("\n");
+            Log.d("RetrofitClient", sb.toString());
+        }
+
         String timestamp = System.currentTimeMillis() + "";
         String device = DeviceUtil.getDeviceId(ContextUtil.getContext());
         String token = SPUtil.getInstance().getString("token");
