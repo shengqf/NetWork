@@ -5,9 +5,11 @@ import java.util.TreeMap;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.HeaderMap;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -23,8 +25,20 @@ import retrofit2.http.Url;
  */
 public interface ApiService {
 
+
+    @GET
+    Observable<ResponseBody> get(
+            @Url String url,
+            @QueryMap Map<String, Object> map);
+
+    @GET
+    Observable<ResponseBody> get(
+            @Url String url,
+            @HeaderMap Map<String, String> headerMap,
+            @QueryMap Map<String, Object> map);
+
     /**
-     * 入参表单形式的post请求
+     * 入参form形式的post请求
      */
     @FormUrlEncoded
     @POST

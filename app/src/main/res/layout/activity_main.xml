@@ -17,4 +17,12 @@
         android:layout_height="wrap_content"
         android:text="申请记录查询"/>
 
+
+    <Button
+        android:id="@+id/https_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="https请求"/>
+
+
 </LinearLayout>

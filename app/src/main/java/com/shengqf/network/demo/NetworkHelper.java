@@ -12,6 +12,7 @@ import com.shengqf.network.demo.util.ToastUtil;
 import com.shengqf.network.listener.OnHeaderMapTransformFunction;
 import com.shengqf.network.listener.OnParamsMapTransformFunction;
 import com.shengqf.network.listener.OnSSOListener;
+import com.shengqf.network.util.NetWokContextUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -27,10 +28,12 @@ import java.util.TreeMap;
 public class NetworkHelper {
 
     static void init(Application application) {
+        NetWokContextUtil.init(application);
         NetworkConfig.getInstance()
                 .setDebug(BuildConfig.DEBUG)
                 .setHttpUrl(BuildConfig.httpUrl)
-                .setMediaType(NetworkConfig.MediaType.JSON)
+                .setMediaType(NetworkConfig.MediaType.FORM)
+                .setCertificateRes(R.raw.cer12306)
                 .setSuccessCode(200)
                 .setConnectTimeOut(15)
                 .setReadTimeOut(15)
@@ -50,6 +53,7 @@ public class NetworkHelper {
                 .setOnSSOListener(new OnSSOListener() {
                     @Override
                     public void singleSignOn() {
+                        // TODO: 2019/9/14  
                         ToastUtil.showShort("你的账号在别的设备登录了，请重新登录");
                     }
                 });
@@ -61,7 +65,7 @@ public class NetworkHelper {
         String device = DeviceUtil.getDeviceId(ContextUtil.getContext());
         String token = SPUtil.getInstance().getString("token");
         String sn = SPUtil.getInstance().getString("sn");
-        String utype = "1";
+        String utype = "1";//居民端-1，医生端-2
 
         TreeMap<String, Object> signMap = new TreeMap<>();
         if (paramsMap != null) {
@@ -105,7 +109,7 @@ public class NetworkHelper {
         String device = DeviceUtil.getDeviceId(ContextUtil.getContext());
         String token = SPUtil.getInstance().getString("token");
         String sn = SPUtil.getInstance().getString("sn");
-        String utype = "1";
+        String utype = "1";//居民端-1，医生端-2
 
         TreeMap<String, Object> signMap = new TreeMap<>();
         if (paramsMap != null) {
@@ -116,8 +120,7 @@ public class NetworkHelper {
         signMap.put("token", token);
         signMap.put("sn", sn);
         signMap.put("utype", utype);
-
-
+        
         String sign;
         StringBuilder sb = new StringBuilder();
         for (String key : signMap.keySet()) {

@@ -18,6 +18,8 @@ public class NetworkConfig {
 
     private Boolean mIsDebug = true; //是否是调试模式，调试模式才打印日志
     private String mHttpUrl = ""; //接口请求地址，"/"结尾
+    private String mHostName = "";//（https请求时设置）服务器的IP
+    private int mCertificateRes;//（https请求时设置）数字证书资源文件（服务端配置证书，客户端在请求服务端时验证服务器的证书）
     private MediaType mMediaType = MediaType.FORM;//post请求默认是form表单提交方式
     private int mSuccessCode = 200;//请求成功码
     private long mConnectTimeOut = 15L;//单位秒
@@ -31,6 +33,7 @@ public class NetworkConfig {
     private static NetworkConfig INSTANCE;
 
     private NetworkConfig() {
+
     }
 
     public static NetworkConfig getInstance() {
@@ -59,6 +62,25 @@ public class NetworkConfig {
     public String getHttpUrl() {
         return mHttpUrl;
     }
+
+    public NetworkConfig setHostName(String hostName) {
+        this.mHostName = hostName;
+        return this;
+    }
+
+    public String getHostName() {
+        return mHostName;
+    }
+
+    public NetworkConfig setCertificateRes(int certificateRes) {
+        this.mCertificateRes = certificateRes;
+        return this;
+    }
+
+    public int getCertificateRes() {
+        return mCertificateRes;
+    }
+
 
     public NetworkConfig setMediaType(MediaType mediaType) {
         this.mMediaType = mediaType;

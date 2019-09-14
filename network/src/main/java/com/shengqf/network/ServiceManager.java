@@ -4,6 +4,9 @@ import com.shengqf.network.json.FastJsonConverterFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -37,14 +40,30 @@ class ServiceManager {
         builder.writeTimeout(NetworkConfig.getInstance().getWriteTimeOut(), TimeUnit.SECONDS);
         builder.readTimeout(NetworkConfig.getInstance().getReadTimeOut(), TimeUnit.SECONDS);
 
+        //debug模式才打印日志
         if (NetworkConfig.getInstance().isDebug()) {
             HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
             logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(logInterceptor);
         }
 
+        String baseUrl = NetworkConfig.getInstance().getHttpUrl();
+
+        //https请求，添加单项认证，校验服务器证书是否与raw文件保存的一直
+        if (baseUrl.startsWith("https")) {
+            HttpsUtil.setSSLSocketFactory(builder);
+
+            //校验请求的IP和服务器的IP是否一致,一致则建立连接，否则断开连接
+//            builder.hostnameVerifier(new HostnameVerifier() {
+//                @Override
+//                public boolean verify(String hostname, SSLSession session) {
+//                    return hostname.equals(NetworkConfig.getInstance().getHostName());
+//                }
+//            });
+        }
+
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(NetworkConfig.getInstance().getHttpUrl())
+                .baseUrl(baseUrl)
                 .client(builder.build())
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

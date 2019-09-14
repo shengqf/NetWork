@@ -10,7 +10,7 @@ import com.shengqf.network.listener.OnParamsMapTransformFunction;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.RxActivity;
-import com.trello.rxlifecycle2.components.RxFragment;
+import com.trello.rxlifecycle2.components.support.RxFragment;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.io.File;
@@ -40,8 +40,8 @@ import okhttp3.RequestBody;
 public class NetworkTask {
 
     private String mUrl;
-    private Map<String, Object> mHeaderMap;
-    private Map<String, Object> mParameterMap;
+    private Map<String, Object> mHeaderMap;//请求头的map
+    private Map<String, Object> mParameterMap;//请求体的map
     private String mServerFileName = "files";
     private String[] mFilePathArray;
 
@@ -51,18 +51,6 @@ public class NetworkTask {
     private OnNetworkSuccessListener mOnSuccessListener;
     private OnNetworkFailListener mOnFailListener;
     private OnNetworkFinishListener mOnFinishListener;
-
-    private static class Singleton {
-        private static final NetworkTask INSTANCE = new NetworkTask();
-    }
-
-    public static NetworkTask getInstance() {
-        return Singleton.INSTANCE;
-    }
-
-    public NetworkTask(){
-        //多个请求同时进行时不能用单例
-    }
 
     public NetworkTask setUrl(String url) {
         mUrl = url;
@@ -227,10 +215,10 @@ public class NetworkTask {
     private Observable<String> post() {
         ApiService baseApiService = ServiceManager.getInstance().create(ApiService.class);
         if (NetworkConfig.getInstance().getMediaType() == NetworkConfig.MediaType.JSON) {
-            //json方式提交
+            //入参json格式的post请求
             return baseApiService.post(mUrl, getHeaderMap(), new Object[]{mParameterMap});
         }
-        //form方式提交
+        //入参form形式的post请求
         return baseApiService.post(mUrl, getCommonParameter());
     }
 
