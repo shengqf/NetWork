@@ -6,14 +6,14 @@ package com.shengqf.network;
  * date : 2019/8/1
  * describe :
  */
-class ResultVo {
+public class ResultVo {
 
-    String data;
-    String properties;
-    String msg;
-    int code;
+    public String data;
+    public String properties;
+    public String msg;
+    public int code;
 
-    boolean isSuccess() {
+    public boolean isSuccess() {
         return code == NetworkConfig.getInstance().getSuccessCode();
     }
 

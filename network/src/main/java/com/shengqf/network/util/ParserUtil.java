@@ -1,7 +1,9 @@
-package com.shengqf.network;
+package com.shengqf.network.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.shengqf.network.NetworkConfig;
+import com.shengqf.network.ResultVo;
 import com.shengqf.network.listener.OnSSOListener;
 
 /**
@@ -10,7 +12,7 @@ import com.shengqf.network.listener.OnSSOListener;
  * date : 2019/8/1
  * describe :
  */
-class ParserUtil {
+public class ParserUtil {
 
     //网络错误
     public static final int NET_ERROR = -1;
@@ -26,7 +28,7 @@ class ParserUtil {
 
     private static int code = -88;
 
-    static ResultVo parser(String json) {
+    public static ResultVo parser(String json) {
         if (json == null) {
             return null;
         }

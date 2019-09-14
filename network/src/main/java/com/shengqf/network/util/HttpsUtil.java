@@ -1,5 +1,6 @@
-package com.shengqf.network;
+package com.shengqf.network.util;
 
+import com.shengqf.network.NetworkConfig;
 import com.shengqf.network.util.NetWokContextUtil;
 
 import java.io.InputStream;

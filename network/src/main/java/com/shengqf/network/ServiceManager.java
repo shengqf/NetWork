@@ -1,11 +1,9 @@
 package com.shengqf.network;
 
 import com.shengqf.network.json.FastJsonConverterFactory;
+import com.shengqf.network.util.HttpsUtil;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

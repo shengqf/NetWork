@@ -7,6 +7,7 @@ import com.shengqf.network.listener.OnNetworkFailListener;
 import com.shengqf.network.listener.OnNetworkFinishListener;
 import com.shengqf.network.listener.OnNetworkSuccessListener;
 import com.shengqf.network.listener.OnParamsMapTransformFunction;
+import com.shengqf.network.util.ParserUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.trello.rxlifecycle2.components.RxActivity;
