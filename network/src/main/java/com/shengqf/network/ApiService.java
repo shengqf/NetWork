@@ -27,12 +27,12 @@ public interface ApiService {
 
 
     @GET
-    Observable<ResponseBody> get(
+    Observable<String> get(
             @Url String url,
             @QueryMap Map<String, Object> map);
 
     @GET
-    Observable<ResponseBody> get(
+    Observable<String> get(
             @Url String url,
             @HeaderMap Map<String, String> headerMap,
             @QueryMap Map<String, Object> map);

@@ -54,14 +54,17 @@ public class MainActivity extends RxAppCompatActivity {
         httpsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                query12306();
+                httpsTest();
             }
         });
     }
 
-    private void query12306() {
-        httpsBtn.setText("查询中...");
-        new NetworkTask().setUrl("https://kyfw.cer12306.cn/")
+    private void httpsTest() {
+        httpsBtn.setText("归属地查询中...");
+        new NetworkTask().setUrl("callback")
+                .addParameter("cmd","1059")
+                .addParameter("callback","phone")
+                .addParameter("phone","15606816762")
                 .setOnSuccessListener(new OnNetworkSuccessListener() {
                     @Override
                     public void onSuccess(String msg, String data, String extra) {
@@ -80,7 +83,7 @@ public class MainActivity extends RxAppCompatActivity {
                         httpsBtn.setText("https请求");
                     }
                 })
-                .post(this);
+                .get(this);
     }
 
     private void queryRecordList() {

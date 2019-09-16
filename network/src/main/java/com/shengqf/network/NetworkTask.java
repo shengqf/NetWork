@@ -123,6 +123,12 @@ public class NetworkTask {
         return this;
     }
 
+    public <T> void get(T t) {
+        mObservable = get();
+        mObservable = bindToLifecycle(t);
+        subscribe();
+    }
+
     public <T> void post(T t) {
         mObservable = post();
         mObservable = bindToLifecycle(t);
@@ -211,6 +217,11 @@ public class NetworkTask {
             return mObservable.compose(((RxFragment) t).<String>bindUntilEvent(FragmentEvent.DESTROY));
         }
         return mObservable;
+    }
+
+    private Observable<String> get() {
+        ApiService baseApiService = ServiceManager.getInstance().create(ApiService.class);
+        return baseApiService.get(mUrl, getCommonParameter());
     }
 
     private Observable<String> post() {

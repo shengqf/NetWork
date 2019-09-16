@@ -32,9 +32,10 @@ public class NetworkHelper {
         NetWokContextUtil.init(application);
         NetworkConfig.getInstance()
                 .setDebug(BuildConfig.DEBUG)
-                .setHttpUrl(BuildConfig.httpUrl)
+                //.setHttpUrl(BuildConfig.httpUrl)
+                .setHttpUrl("https://www.baifubao.com/")
                 .setMediaType(NetworkConfig.MediaType.FORM)
-                .setCertificateRes(R.raw.cer12306)
+                .setCertificateRes(R.raw.phone_num_info)
                 .setSuccessCode(200)
                 .setConnectTimeOut(15)
                 .setReadTimeOut(15)
@@ -131,46 +132,46 @@ public class NetworkHelper {
             Log.d("RetrofitClient", sb.toString());
         }
 
-        String timestamp = System.currentTimeMillis() + "";
-        String device = DeviceUtil.getDeviceId(ContextUtil.getContext());
-        String token = SPUtil.getInstance().getString("token");
-        String sn = SPUtil.getInstance().getString("sn");
-        String utype = "1";//居民端-1，医生端-2
-
-        TreeMap<String, Object> signMap = new TreeMap<>();
-        if (paramsMap != null) {
-            signMap.putAll(paramsMap);
-        }
-        signMap.put("timestamp", timestamp);
-        signMap.put("device", device);
-        signMap.put("token", token);
-        signMap.put("sn", sn);
-        signMap.put("utype", utype);
-        
-        String sign;
-        StringBuilder sb = new StringBuilder();
-        for (String key : signMap.keySet()) {
-            try {
-                String value = (String) signMap.get(key);
-                sb.append(value);
-            } catch (ClassCastException e) {
-                Object object = signMap.get(key);
-                sb.append(JSON.toJSONString(object));
-            }
-        }
-        sign = MD5.getMD5(sb.toString());
+//        String timestamp = System.currentTimeMillis() + "";
+//        String device = DeviceUtil.getDeviceId(ContextUtil.getContext());
+//        String token = SPUtil.getInstance().getString("token");
+//        String sn = SPUtil.getInstance().getString("sn");
+//        String utype = "1";//居民端-1，医生端-2
+//
+//        TreeMap<String, Object> signMap = new TreeMap<>();
+//        if (paramsMap != null) {
+//            signMap.putAll(paramsMap);
+//        }
+//        signMap.put("timestamp", timestamp);
+//        signMap.put("device", device);
+//        signMap.put("token", token);
+//        signMap.put("sn", sn);
+//        signMap.put("utype", utype);
+//
+//        String sign;
+//        StringBuilder sb = new StringBuilder();
+//        for (String key : signMap.keySet()) {
+//            try {
+//                String value = (String) signMap.get(key);
+//                sb.append(value);
+//            } catch (ClassCastException e) {
+//                Object object = signMap.get(key);
+//                sb.append(JSON.toJSONString(object));
+//            }
+//        }
+//        sign = MD5.getMD5(sb.toString());
 
         TreeMap<String, Object> newParamsMap = new TreeMap<>();
-        try {
-            newParamsMap.put("sign", sign);
-            newParamsMap.put("timestamp", timestamp);
-            newParamsMap.put("utype", URLEncoder.encode(utype, "utf-8"));
-            newParamsMap.put("device", URLEncoder.encode(device, "utf-8"));
-            newParamsMap.put("token", URLEncoder.encode(token, "utf-8"));
-            newParamsMap.put("sn", URLEncoder.encode(sn, "utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            newParamsMap.put("sign", sign);
+//            newParamsMap.put("timestamp", timestamp);
+//            newParamsMap.put("utype", URLEncoder.encode(utype, "utf-8"));
+//            newParamsMap.put("device", URLEncoder.encode(device, "utf-8"));
+//            newParamsMap.put("token", URLEncoder.encode(token, "utf-8"));
+//            newParamsMap.put("sn", URLEncoder.encode(sn, "utf-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
         if (paramsMap != null) {
             newParamsMap.putAll(paramsMap);
         }
