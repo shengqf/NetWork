@@ -1,7 +1,6 @@
 package com.shengqf.network.util;
 
 import com.shengqf.network.NetworkConfig;
-import com.shengqf.network.util.NetWokContextUtil;
 
 import java.io.InputStream;
 import java.security.KeyStore;
@@ -20,10 +19,7 @@ import okhttp3.OkHttpClient;
  * Email : shengqf@bsoft.com.cn
  * date : 2019/8/22
  * describe :
- * <p>
- * 参考：
- * https://blog.csdn.net/qq_20521573/article/details/79233793
- * https://www.jianshu.com/p/2bb5317f05d3
+ * 参考：https://blog.csdn.net/qq_20521573/article/details/79233793
  */
 public class HttpsUtil {
 
@@ -60,7 +56,7 @@ public class HttpsUtil {
         try {
             InputStream certificateInputString = NetWokContextUtil.getContext().getResources()
                     .openRawResource(NetworkConfig.getInstance().getCertificateRes());
-            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509", "BC");
             KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
             keyStore.load(null);
             String certificateAlias = String.valueOf(System.currentTimeMillis());

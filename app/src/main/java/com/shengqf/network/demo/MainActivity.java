@@ -18,102 +18,22 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 public class MainActivity extends RxAppCompatActivity {
 
-    private Button loginBtn, recordBtn, httpsBtn;
-    private NetworkTask mLoginTask, mQueryTask;
+    private Button loginBtn;
+    private NetworkTask mLoginTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initView();
-        setClick();
-    }
-
-    private void initView() {
         loginBtn = findViewById(R.id.login_btn);
-        recordBtn = findViewById(R.id.record_btn);
-        httpsBtn = findViewById(R.id.https_btn);
-    }
 
-    private void setClick() {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 login();
             }
         });
-
-        recordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                queryRecordList();
-            }
-        });
-
-        httpsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                httpsTest();
-            }
-        });
-    }
-
-    private void httpsTest() {
-        httpsBtn.setText("归属地查询中...");
-        new NetworkTask().setUrl("callback")
-                .addParameter("cmd","1059")
-                .addParameter("callback","phone")
-                .addParameter("phone","15606816762")
-                .setOnSuccessListener(new OnNetworkSuccessListener() {
-                    @Override
-                    public void onSuccess(String msg, String data, String extra) {
-                        ToastUtil.showShort("查询成功");
-                    }
-                })
-                .setOnFailListener(new OnNetworkFailListener() {
-                    @Override
-                    public void onFail(int code, String msg) {
-                        ToastUtil.showLong(msg);
-                    }
-                })
-                .setOnFinishListener(new OnNetworkFinishListener() {
-                    @Override
-                    public void onFinish() {
-                        httpsBtn.setText("https请求");
-                    }
-                })
-                .get(this);
-    }
-
-    private void queryRecordList() {
-        recordBtn.setText("申请记录查询中...");
-        if (mQueryTask == null) {
-            mQueryTask = new NetworkTask();
-        }
-        mQueryTask.setUrl("auth/copyApply/getList")
-                .setMediaType(NetworkConfig.MediaType.JSON)
-                .addParameter("pageNo", 1)
-                .addParameter("pageSize", 20)
-                .setOnSuccessListener(new OnNetworkSuccessListener() {
-                    @Override
-                    public void onSuccess(String msg, String data, String extra) {
-                        ToastUtil.showShort("查询成功");
-                    }
-                })
-                .setOnFailListener(new OnNetworkFailListener() {
-                    @Override
-                    public void onFail(int code, String msg) {
-                        ToastUtil.showLong(msg);
-                    }
-                })
-                .setOnFinishListener(new OnNetworkFinishListener() {
-                    @Override
-                    public void onFinish() {
-                        recordBtn.setText("申请记录查询");
-                    }
-                })
-                .post(this);
     }
 
     private void login() {
@@ -124,7 +44,8 @@ public class MainActivity extends RxAppCompatActivity {
         mLoginTask.setUrl("login")
                 .setMediaType(NetworkConfig.MediaType.FORM)
                 .addParameter("username", "15606816762")
-                .addParameter("password", MD5.getMD5("qwerty"))
+                .addParameter("password", MD5.getMD5("123456Qwerty"))
+                .addParameter("utype", "1")
                 .setOnSuccessListener(new OnNetworkSuccessListener() {
                     @Override
                     public void onSuccess(String msg, String data, String extra) {

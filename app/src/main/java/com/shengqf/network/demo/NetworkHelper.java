@@ -32,10 +32,9 @@ public class NetworkHelper {
         NetWokContextUtil.init(application);
         NetworkConfig.getInstance()
                 .setDebug(BuildConfig.DEBUG)
-                //.setHttpUrl(BuildConfig.httpUrl)
-                .setHttpUrl("https://www.baifubao.com/")
+                .setHttpUrl(BuildConfig.httpUrl)
                 .setMediaType(NetworkConfig.MediaType.FORM)
-                .setCertificateRes(R.raw.phone_num_info)
+                .setCertificateRes(R.raw.cert)
                 .setSuccessCode(200)
                 .setConnectTimeOut(15)
                 .setReadTimeOut(15)

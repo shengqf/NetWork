@@ -50,14 +50,6 @@ class ServiceManager {
         //https请求，添加单项认证，校验服务器证书是否与raw文件保存的一直
         if (baseUrl.startsWith("https")) {
             HttpsUtil.setSSLSocketFactory(builder);
-
-            //校验请求的IP和服务器的IP是否一致,一致则建立连接，否则断开连接
-//            builder.hostnameVerifier(new HostnameVerifier() {
-//                @Override
-//                public boolean verify(String hostname, SSLSession session) {
-//                    return hostname.equals(NetworkConfig.getInstance().getHostName());
-//                }
-//            });
         }
 
         mRetrofit = new Retrofit.Builder()
